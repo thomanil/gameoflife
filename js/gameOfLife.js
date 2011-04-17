@@ -10,22 +10,31 @@ var gameOfLife = (function() { // Module pattern
 		grid : null,
 		ctx : null,
 
-		init: function(width, height){
+		initState: function(width, height){
 			this.grid = new Grid(width, height);
 		},
 		
-		updatedCellState: function(grid, x, y){
-			return 'green';
+		initCanvas: function(width, height){
+				var canvas = $("canvas")[0];
+				canvas.width = width;
+				canvas.height = height;
+				this.ctx = $("canvas")[0].getContext('2d');
 		},
 		
-		// TODO blow up grid, paint each pixel as big block
+		// A live cell is 1, a dead cell is 0
+		updatedCellState: function(grid, x, y){
+			return 1;
+		},
+		
+		
 		tick: function(grid){
 			return grid.map(function(cell, x, y) {
 				return gameOfLife.updatedCellState(grid, x ,y)
 			});
 		},
 
-		drawPixel: function(x, y){		    
+		// TODO blow up up grid, paint each pixel as big block
+		drawCell: function(x, y){		    
 			var id = this.ctx.getImageData(0, 0, 1, 1);
 			id.data[3] = 255; // set opacity
 			var r = Math.floor(Math.random() * 256);
@@ -41,22 +50,16 @@ var gameOfLife = (function() { // Module pattern
 		drawState: function(grid){
 			var that = this;
 			grid.each(function(cell, x, y) {
-				that.drawPixel(x, y);
+				that.drawCell(x, y);
 			});
 		},
 		
 		begin: function(){
-			this.init(200, 200);
-			
-			// TODO extract this
-			this.ctx = $("canvas")[0].getContext('2d');
-			var canvas = $("canvas")[0];
-			canvas.width = 200;
-			canvas.height = 200;
-			
-			
+			this.initState(200, 200);
+			this.initCanvas(200, 200);
+
 			// 10 times every second
-			var grid = this.tick(this.grid);
+			this.grid = this.tick(this.grid);
 			this.drawState(this.grid);
 		},
 		

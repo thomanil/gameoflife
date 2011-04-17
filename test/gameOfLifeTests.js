@@ -7,7 +7,7 @@ TestCase("FirstTestcase", {
 
 	
 	"test game init": function(){
-		gameOfLife.init(400, 300);
+		gameOfLife.initState(400, 300);
 		var grid = gameOfLife.grid;
 		assertNotNull(grid);
 		assertEquals(400, grid.width());
