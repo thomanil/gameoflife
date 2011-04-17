@@ -51,8 +51,8 @@ var gameOfLife = (function() { // Module pattern
 			// TODO extract this
 			this.ctx = $("canvas")[0].getContext('2d');
 			var canvas = $("canvas")[0];
-			canvas.width = width;
-			canvas.height = height;
+			canvas.width = 200;
+			canvas.height = 200;
 			
 			
 			// 10 times every second
