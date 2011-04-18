@@ -1,23 +1,86 @@
 var gameOfLife = (function() { // Module pattern	
 	var zoom = 5;
 	var ctx = null;
+	var width = 100;
+	var height = 50;
 	
 	return {	
 		
 		// Game state 
+		
 		grid : null,
 
 		// Game logic
+		
 		initState: function(width, height){
 			this.grid = new Grid(width, height);
 		},
+		
+		eachNeighbour: function(grid, x, y, todo){
+			var doForNeighbour = function(deltaX, deltaY) {
+			  var xPos = x + deltaX;
+			  var yPos = y + deltaY;
+			  var cell = grid.get(xPos, yPos);
+			  if(cell){
+				todo(cell);
+		      }
+			};
+			
+			doForNeighbour(-1,-1);
+			doForNeighbour(0,-1);
+			doForNeighbour(1,-1);
+			doForNeighbour(-1,1);
+			doForNeighbour(0,1);
+			doForNeighbour(1,1);
+			doForNeighbour(-1,0);
+			doForNeighbour(1,0);
+		},
+		
+		countLiveNeighbours: function(grid, x, y) {
+			var count = 0;
+			this.eachNeighbour(grid,x,y,function(cell) {
+				count += cell;
+			});
+			return count;
+		},
+				
+		willLive: function(grid, x, y){						
+			var liveNeighbours = this.countLiveNeighbours(grid, x, y);
+			var cell = grid.get(x, y);
+
+			if (cell === 1) { // alive
+				if (liveNeighbours <= 1) {
+					return false;
+				} else if (liveNeighbours > 3)  {
+					return false;
+				} else {
+					return true;
+				}
+			} else {
+				if (liveNeighbours === 3) {
+					return true;
+				} else{
+					return false;
+				}
+			}		
+		},
+		
+		tick: function(grid){
+			return grid.map(function(cell, x, y) {
+				if(gameOfLife.willLive(grid, x ,y)){
+					return 1;
+				} else {
+					return 0;
+				}
+			});
+		},		
 				
 		randomSeededState : function(width, height) {
 			var seed = new Grid(width, height);
 			return seed.map(function(cell, x, y) {
-				var percentLikelyAlive = 10;
+				var populationDensityPercent = 20;
 				var deadOrAlive = Math.floor(Math.random() * 100);
-				if(deadOrAlive <= percentLikelyAlive){
+				if(deadOrAlive <= populationDensityPercent){
 					return 1;
 				} else {
 					return 0;
@@ -25,17 +88,12 @@ var gameOfLife = (function() { // Module pattern
 			});
 		},
 		
-		deadOrAlive: function(grid, x, y){
-			return 1; // A live cell is 1, a dead cell is 0
-		},
-				
-		tick: function(grid){
-			return grid.map(function(cell, x, y) {
-				return gameOfLife.deadOrAlive(grid, x ,y)
-			});
-		},
 		
-		// Canvas drawing
+				
+	
+		
+		// Canvas drawing logic
+		
 		initCanvas: function(width, height){
 				var canvas = $("canvas")[0];
 				canvas.width = width;
@@ -69,24 +127,23 @@ var gameOfLife = (function() { // Module pattern
 			ctx.clearRect(0, 0, width, height);
 		},
 		
-		begin: function(){
-			var width = 150;
-			var height = 80;
-			var z = zoom;
-			this.initState(width, height);
-			this.grid = this.randomSeededState(width, height);
-			this.initCanvas(width*z, height*z);
-
+		// Game launch logic
+		
+		startGameLoop: function(){
 			var that = this;
-
-			//var fps = 5;
 			window.setInterval(function() {
+				that.clearCanvas(width*zoom, height*zoom);
 				that.grid = that.tick(that.grid);
-				that.clearCanvas(width*z, height*z);
 				that.drawState(that.grid);
 			}, 300);
-			
 		},
+		
+		begin: function(){
+			this.initState(width, height);
+			this.grid = this.randomSeededState(width, height);
+			this.initCanvas(width*zoom, height*zoom);
+			this.startGameLoop();
+		}
 		
 	};
 })();
