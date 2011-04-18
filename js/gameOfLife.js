@@ -1,8 +1,9 @@
 var gameOfLife = (function() { // Module pattern	
 	var zoom = 5;
 	var ctx = null;
-	var width = 100;
-	var height = 50;
+	var width = 120;
+	var height = 80;
+	var populationDensityPercent = 40;
 	
 	return {	
 		
@@ -75,10 +76,8 @@ var gameOfLife = (function() { // Module pattern
 			});
 		},		
 				
-		randomSeededState : function(width, height) {
-			var seed = new Grid(width, height);
-			return seed.map(function(cell, x, y) {
-				var populationDensityPercent = 20;
+		randomSeededState : function(width, height) {			
+			return new Grid(width, height).map(function(cell, x, y) {
 				var deadOrAlive = Math.floor(Math.random() * 100);
 				if(deadOrAlive <= populationDensityPercent){
 					return 1;
@@ -89,22 +88,19 @@ var gameOfLife = (function() { // Module pattern
 		},
 		
 		
-				
-	
-		
 		// Canvas drawing logic
 		
 		initCanvas: function(width, height){
-				var canvas = $("canvas")[0];
+				var canvas = document.getElementById("viewport");
 				canvas.width = width;
 				canvas.height = height;
-				ctx = $("canvas")[0].getContext('2d');
+				ctx = canvas.getContext('2d');
 		},
 
 		randomRgbStyle: function(){
 			var r = 0;
-			var g = Math.floor(Math.random() * 256);
-			var b = 0;
+			var g = 0;
+			var b = 50 + Math.floor(Math.random() * 206);
 			return "rgb("+r+","+g+","+b+")";
 		},
 
@@ -127,6 +123,7 @@ var gameOfLife = (function() { // Module pattern
 			ctx.clearRect(0, 0, width, height);
 		},
 		
+		
 		// Game launch logic
 		
 		startGameLoop: function(){
@@ -135,7 +132,7 @@ var gameOfLife = (function() { // Module pattern
 				that.clearCanvas(width*zoom, height*zoom);
 				that.grid = that.tick(that.grid);
 				that.drawState(that.grid);
-			}, 300);
+			}, 100);
 		},
 		
 		begin: function(){
