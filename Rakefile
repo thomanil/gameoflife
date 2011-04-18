@@ -24,6 +24,11 @@ task :jslint do
   echo "Done running JSLint."
 end
 
+desc "Deploy to Heroku"
+task :deploy do
+  puts %x{ git push heroku master }
+end
+
 
 # Helper functions
 def echo(msg)
