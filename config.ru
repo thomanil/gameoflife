@@ -1,2 +1,2 @@
-require 'mineverktoy'
+require 'gameoflife'
 run Sinatra::Application
