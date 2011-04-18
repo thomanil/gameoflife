@@ -281,12 +281,30 @@ button {  width: auto; overflow: visible; }
   h2, h3{ page-break-after: avoid; }
 }
 
+
+#main {
+	margin: 30px;
+	width: 600px;
+}
+
 #title {
 	margin: 30px;
+	font-size: 130%;
+}
+
+#github-reference {
+	color: gray;
+	font-size: 80%;
+	float: right;
+	margin: 0px;
+}
+
+section {
+	margin: 30px 0px 30px 0px;
 }
 
 canvas {
-	margin: 30px;
+
 	outline-style: solid;
 	outline-color: #DBDBDB;
 	outline-width: thin;

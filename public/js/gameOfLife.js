@@ -1,8 +1,8 @@
 var gameOfLife = (function() { // Module pattern	
-	var zoom = 5;
+	var zoom = 3;
 	var ctx = null;
-	var width = 120;
-	var height = 80;
+	var width = 200;
+	var height = 100;
 	var populationDensityPercent = 40;
 	
 	return {	
@@ -16,31 +16,10 @@ var gameOfLife = (function() { // Module pattern
 		initState: function(width, height){
 			this.grid = new Grid(width, height);
 		},
-		
-		// TODO move to Grid.js
-		eachNeighbour: function(grid, x, y, todo){
-			var doForNeighbour = function(deltaX, deltaY) {
-			  var xPos = x + deltaX;
-			  var yPos = y + deltaY;
-			  var cell = grid.get(xPos, yPos);
-			  if(cell){
-				todo(cell);
-		      }
-			};
-			
-			doForNeighbour(-1,-1);
-			doForNeighbour(0,-1);
-			doForNeighbour(1,-1);
-			doForNeighbour(-1,1);
-			doForNeighbour(0,1);
-			doForNeighbour(1,1);
-			doForNeighbour(-1,0);
-			doForNeighbour(1,0);
-		},
-		
+				
 		countLiveNeighbours: function(grid, x, y) {
 			var count = 0;
-			this.eachNeighbour(grid,x,y,function(cell) {
+			grid.eachNeighbour(x,y,function(cell) {
 				count += cell;
 			});
 			return count;

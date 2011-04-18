@@ -13,36 +13,7 @@ TestCase("FirstTestcase", {
 		assertEquals(400, grid.width());
 		assertEquals(300, grid.height());
 	},
-		
-	testEachNeighbour: function(attribute){
-		var grid = new Grid([[1,10,100], 
-							 [5,50,500],
-							 [8,80,800]]);
-		var expectedSum = 1504; 
-		
-		var actualSum = 0;
-		gameOfLife.eachNeighbour(grid, 1, 1, function(cell) {
-			actualSum += cell;
-		});
-		
-		assertEquals(expectedSum,actualSum);
-	},	
-	
-	testEachNeighbourAtEdge: function(attribute){
-		var grid = new Grid([[1,10,100], 
-							 [5,50,500],
-							 [8,80,800]]);
-		var expectedSum = 149; 
-		
-		var actualSum = 0;
-		gameOfLife.eachNeighbour(grid, 0, 1, function(cell) {
-			actualSum += cell;
-		});
-		
-		assertEquals(expectedSum,actualSum);
-	},
-	
-	
+			
 	// Any live cell with fewer than two live neighbours dies, as if caused by under-population
 	"test live cell with no neighbours dies": function(){
 		var grid = new Grid([[0,0,0], 
