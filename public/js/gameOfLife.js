@@ -17,6 +17,7 @@ var gameOfLife = (function() { // Module pattern
 			this.grid = new Grid(width, height);
 		},
 		
+		// TODO move to Grid.js
 		eachNeighbour: function(grid, x, y, todo){
 			var doForNeighbour = function(deltaX, deltaY) {
 			  var xPos = x + deltaX;

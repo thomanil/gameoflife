@@ -13,8 +13,8 @@ task :jslint do
   lint_command = "java -classpath ./lib/jsLint/js.jar "+ 
                   "org.mozilla.javascript.tools.shell.Main ./lib/jsLint/jslint.js";
 
-  IMPL_JS = "js/gameOfLife.js";
-  TEST_JS = "test/gameOfLifeTests.js";
+  IMPL_JS = "public/js/gameOfLife.js";
+  TEST_JS = "public/test/gameOfLifeTests.js";
   
   echo "Running JSLint on: "+IMPL_JS
   puts %x{ #{lint_command} #{IMPL_JS} };
