@@ -1,11 +1,5 @@
 TestCase("FirstTestcase", {
 	
-    testProjectNamespaceExists:function(){
-	   assertTrue(gameOfLife !== undefined);
-    },
-
-
-	
 	"test game init": function(){
 		gameOfLife.initState(400, 300);
 		var grid = gameOfLife.grid;

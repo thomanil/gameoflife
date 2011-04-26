@@ -1,4 +1,4 @@
-var gameOfLife = (function() { // Module pattern	
+var gameOfLife = (function() {
 	var zoom = 3;
 	var ctx = null;
 	var width = 200;
@@ -10,6 +10,7 @@ var gameOfLife = (function() { // Module pattern
 		// Game state 
 		
 		grid : null,
+
 
 		// Game logic
 		
