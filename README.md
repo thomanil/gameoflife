@@ -1,20 +1,17 @@
 # gameOfLife
 
+This is a JavaScript implementation of Conways Game of Life, a zero-player game that plays itself on a two-dimensional grid. The grid starts with a randomly seeded state. Then it starts evolving. 
 
-## DESCRIPTION:
+There are only a few simple rules about how cells interact with each other:
 
+Any live cell with fewer than two live neighbours dies, as if caused by under-population.
+Any live cell with two or three live neighbours lives on to the next generation.
+Any live cell with more than three live neighbours dies, as if by overcrowding.
+Any dead cell with exactly three live neighbours becomes a live cell, as if by reproduction.
 
-## FEATURES/PROBLEMS:
+As the game progresses you'll start to see some repeated patterns ("organisms") emerge.
 
-
-## REQUIREMENTS:
-
-
-## INSTALLATION:
-
-
-## USAGE:
-
+You can see how it looks in action at [gameoflife.heroku.com](http://gameoflife.heroku.com).
 
 ## LICENSE:
 
