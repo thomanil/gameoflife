@@ -1,9 +1,9 @@
-var gameOfLife = (function() {
+var gameOfLife = (function() { // Module pattern	
 	var zoom = 3;
 	var ctx = null;
 	var width = 200;
 	var height = 100;
-	var populationDensityPercent = 40;
+	var populationDensityPercent = 70;
 	
 	return {	
 		
@@ -11,16 +11,33 @@ var gameOfLife = (function() {
 		
 		grid : null,
 
-
 		// Game logic
 		
 		initState: function(width, height){
 			this.grid = new Grid(width, height);
 		},
-				
+		
+		eachNeighbour: function(grid, x, y, todo){
+			var doForNeighbour = function(deltaX, deltaY) {
+			  var xPos = x + deltaX;
+			  var yPos = y + deltaY;
+			  var cell = grid.getWrapped(xPos, yPos);
+			  todo(cell);
+			};
+			
+			doForNeighbour(-1,-1);
+			doForNeighbour(0,-1);
+			doForNeighbour(1,-1);
+			doForNeighbour(-1,1);
+			doForNeighbour(0,1);
+			doForNeighbour(1,1);
+			doForNeighbour(-1,0);
+			doForNeighbour(1,0);
+		},
+		
 		countLiveNeighbours: function(grid, x, y) {
 			var count = 0;
-			grid.eachNeighbour(x,y,function(cell) {
+			this.eachNeighbour(grid,x,y,function(cell) {
 				count += cell;
 			});
 			return count;
@@ -113,7 +130,8 @@ var gameOfLife = (function() {
 				that.clearCanvas(width*zoom, height*zoom);
 				that.grid = that.tick(that.grid);
 				that.drawState(that.grid);
-			}, 100);
+				console.log("loop");
+			}, 200);
 		},
 		
 		begin: function(){
